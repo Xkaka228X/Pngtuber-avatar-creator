@@ -1,0 +1,270 @@
+:root {
+    --bg: #0a0a0a;
+    --panel-bg: #141414;
+    --panel-border: rgba(255,255,255,0.08);
+    --accent: #00f2ff; /* Голубой акцент */
+    --text: #ffffff;
+    --font: 'Comfortaa', cursive;
+    --p-width: 350px;
+}
+
+body {
+    margin: 0; padding: 0;
+    height: 100vh;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font);
+    overflow: hidden;
+    display: flex;
+}
+
+/* Сцена аватара */
+.avatar-stage {
+    flex-grow: 1;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: margin-right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    background: radial-gradient(circle at center, #1a1a1a 0%, #0a0a0a 100%);
+}
+
+#avatar {
+    max-width: 85%; max-height: 85%;
+    object-fit: contain;
+    animation: breathe 3s ease-in-out infinite;
+    image-rendering: pixelated; /* Опционально для пиксель-арта */
+}
+
+/* БОКОВАЯ ПАНЕЛЬ */
+.side-panel {
+    position: fixed;
+    top: 0; right: 0;
+    width: var(--p-width);
+    height: 100vh;
+    background: var(--panel-bg);
+    box-shadow: -10px 0 50px rgba(0,0,0,0.8);
+    padding: 30px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 100;
+    border-left: 1px solid var(--panel-border);
+    opacity: 0.95;
+}
+
+/* Класс для скрытия */
+.side-panel.collapsed {
+    transform: translateX(100%);
+}
+
+.panel-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.header-icon {
+    width: 24px;
+    height: 24px;
+    opacity: 0.7;
+}
+
+.panel-header h2 {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+/* Кнопки сворачивания */
+.close-btn, .toggle-btn {
+    background: #1d1d1d;
+    border: 1px solid var(--panel-border);
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+    padding: 8px 12px;
+    font-family: var(--font);
+    transition: 0.2s;
+}
+
+.close-btn:hover, .toggle-btn:hover {
+    background: #252525;
+    border-color: rgba(255,255,255,0.15);
+}
+
+.toggle-btn {
+    position: fixed;
+    top: 20px; right: 20px;
+    z-index: 90;
+    width: auto; height: auto;
+    display: none; /* Пока панель видна - скрыта */
+}
+
+.toggle-btn.visible { display: block; }
+
+/* ГЛАВНАЯ КНОПКА МИКРОФОНА (исправлена) */
+.main-mic-btn {
+    width: 100%;
+    /* Кнопка стала компактнее */
+    padding: 15px 20px;
+    background: #1d1d1d;
+    border: 1px solid var(--panel-border);
+    border-radius: 12px;
+    color: white;
+    font-weight: bold;
+    font-size: 14px;
+    font-family: var(--font);
+    cursor: pointer;
+    display: flex;
+    flex-direction: row; /* Иконка и текст в ряд */
+    align-items: center;
+    justify-content: center;
+    gap: 12px; /* Отступ между иконкой и текстом */
+    transition: 0.3s;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Главное исправление размера иконки */
+.mic-icon {
+    width: 24px; /* Фиксированный, аккуратный размер */
+    height: 24px;
+    object-fit: contain;
+}
+
+.main-mic-btn:hover {
+    background: #252525;
+    border-color: rgba(255,255,255,0.15);
+}
+
+.main-mic-btn.active {
+    border-color: var(--accent);
+    background: rgba(0, 242, 255, 0.08);
+    box-shadow: 0 0 15px rgba(0, 242, 255, 0.15);
+    color: var(--accent);
+}
+
+/* Кнопки файлов */
+.action-buttons { display: flex; flex-direction: column; gap: 12px; }
+.action-btn {
+    background: #1d1d1d;
+    padding: 18px;
+    border-radius: 10px;
+    text-align: center;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 14px;
+    border: 1px solid var(--panel-border);
+    transition: 0.2s;
+}
+.action-btn:hover { background: #252525; border-color: var(--accent); }
+.file-input-label input { display: none; }
+
+/* Шкала чувствительности */
+.meter-input-group label {
+    font-size: 13px;
+    opacity: 0.7;
+    margin-bottom: 10px;
+    display: block;
+}
+
+.meter-wrapper {
+    position: relative; width: 100%; height: 12px;
+    background: #000; border-radius: 6px; overflow: hidden; margin-top: 5px;
+}
+#volume-meter-bar { height: 100%; width: 0%; background: var(--accent); transition: 0.05s; }
+#threshold-slider {
+    position: absolute; top: -7px; left: 0; width: 100%;
+    -webkit-appearance: none; background: transparent; cursor: pointer;
+    z-index: 10;
+}
+#threshold-slider::-webkit-slider-thumb {
+    -webkit-appearance: none; width: 5px; height: 26px; background: #fff; border-radius: 3px;
+    box-shadow: 0 0 5px rgba(0,0,0,0.5);
+}
+
+#threshold-val {
+    font-size: 15px; font-weight: bold; color: var(--accent); margin-left: 10px;
+}
+
+.divider {
+    height: 1px;
+    background: var(--panel-border);
+    margin: 10px 0;
+}
+
+.hidden { display: none !important; }
+
+/* Анимации */
+@keyframes breathe {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+}
+
+.talking { animation: bounce 0.2s infinite !important; }
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
+}
+/* ... весь прошлый CSS остается ... */
+
+.slot-section {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.slot-section label {
+    font-size: 13px;
+    opacity: 0.7;
+}
+
+.slot-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+}
+
+.slot-btn {
+    background: #1d1d1d;
+    border: 1px solid var(--panel-border);
+    color: white;
+    padding: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: var(--font);
+    font-weight: bold;
+    transition: 0.2s;
+}
+
+.slot-btn.active {
+    border-color: var(--accent);
+    background: rgba(0, 242, 255, 0.1);
+    color: var(--accent);
+}
+
+.save-btn {
+    background: #27ae60;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: var(--font);
+    font-weight: bold;
+    font-size: 12px;
+    margin-top: 5px;
+    transition: 0.2s;
+}
+
+.save-btn:hover { background: #2ecc71; }

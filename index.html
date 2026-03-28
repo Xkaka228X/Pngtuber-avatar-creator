@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PNGTuber Pro Control</title>
+    <link rel="icon" type="image/png" href="icon.png">
+    <link rel="manifest" href="manifest.json">
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <button id="toggle-panel" class="toggle-btn"><span>◀</span></button>
+
+    <div class="avatar-stage" id="stage">
+        <img id="avatar" src="1.png" alt="Avatar">
+    </div>
+
+    <div class="side-panel" id="panel">
+        <div class="panel-header">
+            <div class="header-left">
+                <img src="icon.png" class="header-icon" alt="icon">
+                <h2>Настройки</h2>
+            </div>
+            <button class="close-btn" id="hide-panel">▶</button>
+        </div>
+        
+        <button id="start-btn" class="main-mic-btn">
+            <img src="icon.png" class="mic-icon" alt="mic">
+            <span>ВКЛЮЧИТЬ МИКРОФОН</span>
+        </button>
+
+        <div class="mic-settings hidden" id="settings-group">
+            <label>Чувствительность</label>
+            <div class="meter-input-group">
+                <div class="meter-wrapper">
+                    <div id="volume-meter-bar"></div>
+                    <input type="range" id="threshold-slider" min="0" max="100" value="25">
+                </div>
+                <span id="threshold-val">25%</span>
+            </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="slot-section">
+            <label>Мои Аватары</label>
+            <div class="slot-grid">
+                <button class="slot-btn active" data-slot="1">1</button>
+                <button class="slot-btn" data-slot="2">2</button>
+                <button class="slot-btn" data-slot="3">3</button>
+                <button class="slot-btn" data-slot="4">4</button>
+            </div>
+            <button id="save-slot-btn" class="save-btn">💾 Сохранить текущий</button>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="action-buttons">
+            <label class="action-btn file-input-label">
+                <input type="file" id="idle-input" accept="image/*"> 1. Покой
+            </label>
+            <label class="action-btn file-input-label">
+                <input type="file" id="blink-input" accept="image/*"> 2. Морг
+            </label>
+            <label class="action-btn file-input-label">
+                <input type="file" id="talk-input" accept="image/*"> 3. Голос
+            </label>
+            <label class="action-btn file-input-label">
+                <input type="file" id="talk-blink-input" accept="image/*"> 4. Голос+Морг
+            </label>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
